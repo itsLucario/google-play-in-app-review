@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-gooogle-play-in-app-review",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This is a cordova plugin for Google Play In App Review",
   "cordova": {
     "id": "cordova-plugin-gooogle-play-in-app-review",
