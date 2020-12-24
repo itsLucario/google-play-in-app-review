@@ -32,23 +32,26 @@ public class InAppReviewAndroid extends CordovaPlugin {
         reviewManager = ReviewManagerFactory.create(cordova.getActivity());
         Task<ReviewInfo> request = reviewManager.requestReviewFlow();
         JSONObject result = new JSONObject();
-        
-        request.addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                result.put("taskComplete", true);
-                ReviewInfo reviewInfo = task.getResult();
-                Task<Void> flow = reviewManager.launchReviewFlow(cordova.getActivity(), reviewInfo);
+        try {
+            request.addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    result.put("taskComplete", true);
+                    ReviewInfo reviewInfo = task.getResult();
+                    Task<Void> flow = reviewManager.launchReviewFlow(cordova.getActivity(), reviewInfo);
 
-                flow.addOnCompleteListener(task1 -> {
-                    result.put("flowComplete", true);
-                    callbackContext.success(result);
-                });
-            } else {
-                Log.i(TAG, "Task Unsuccessful");
-                result.put("taskComplete", false);
-                result.put("flowComplete", false);
-                callbackContext.error(result);
-            }
-        });
+                    flow.addOnCompleteListener(task1 -> {
+                        result.put("flowComplete", true);
+                        callbackContext.success(result);
+                    });
+                } else {
+                    Log.i(TAG, "Task Unsuccessful");
+                    result.put("taskComplete", false);
+                    result.put("flowComplete", false);
+                    callbackContext.error(result);
+                }
+            });
+        } catch(Exception e) {
+            callbackContext.error("Error creating response: " + e.getLocalizedMessage());
+        }
     }
 }
