@@ -1,0 +1,14 @@
+{
+  "name": "@lucario/in-app-review",
+  "version": "1.0.0",
+  "description": "This is a ionic plugin for Google Play In App Review supporting cordova",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "google-play",
+    "in-app-review",
+    "in-app-ratings"
+  ],
+  "author": "itsLucario",
+  "license": "MIT"
+}

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-gooogle-play-in-app-review" version="1.0.0"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>InAppReviewAndroid</name>
+    <js-module name="InAppReviewAndroid" src="www/InAppReviewAndroid.js">
+        <clobbers target="cordova.plugins.InAppReviewAndroid" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="InAppReviewAndroid">
+                <param name="android-package" value="dev.nandan.plugin.InAppReviewAndroid" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/InAppReviewAndroid.java" target-dir="src/dev/nandan/plugin/InAppReviewAndroid" />
+        <framework src="com.google.android.play:core:1.9.0" />
+    </platform>
+</plugin>
