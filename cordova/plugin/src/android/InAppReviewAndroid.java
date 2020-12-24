@@ -17,7 +17,7 @@ import com.google.android.play.core.tasks.Task;
 
 public class InAppReviewAndroid extends CordovaPlugin {
     public static final String TAG = "InAppReviewPlugin";
-    private ReviewManager reviewManager = ReviewManagerFactory.create(this);;
+    private ReviewManager reviewManager;
     
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -29,6 +29,7 @@ public class InAppReviewAndroid extends CordovaPlugin {
     }
 
     private void  initReviewFlow(CallbackContext callbackContext) {
+        reviewManager = ReviewManagerFactory.create(cordova.getActivity());
         Task<ReviewInfo> request = reviewManager.requestReviewFlow();
         JSONObject result = new JSONObject();
 
@@ -36,7 +37,7 @@ public class InAppReviewAndroid extends CordovaPlugin {
             if (task.isSuccessful()) {
                 result.put("taskComplete", true);
                 ReviewInfo reviewInfo = task.getResult();
-                Task<Void> flow = reviewManager.launchReviewFlow(this, reviewInfo);
+                Task<Void> flow = reviewManager.launchReviewFlow(cordova.getActivity(), reviewInfo);
 
                 flow.addOnCompleteListener(task1 -> {
                     result.put("flowComplete", true);
