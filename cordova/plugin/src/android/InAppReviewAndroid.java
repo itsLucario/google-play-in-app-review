@@ -21,8 +21,8 @@ public class InAppReviewAndroid extends CordovaPlugin {
     
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("coolMethod")) {
-            this.coolMethod(callbackContext);
+        if (action.equals("initGooglePlayReview")) {
+            this.initReviewFlow(callbackContext);
             return true;
         }
         return false;
