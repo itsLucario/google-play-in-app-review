@@ -28,30 +28,27 @@ public class InAppReviewAndroid extends CordovaPlugin {
         return false;
     }
 
-    private void  initReviewFlow(CallbackContext callbackContext) {
+    private void  initReviewFlow(CallbackContext callbackContext) throws JSONException {
         reviewManager = ReviewManagerFactory.create(cordova.getActivity());
         Task<ReviewInfo> request = reviewManager.requestReviewFlow();
         JSONObject result = new JSONObject();
-        try {
-            request.addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    result.put("taskComplete", true);
-                    ReviewInfo reviewInfo = task.getResult();
-                    Task<Void> flow = reviewManager.launchReviewFlow(cordova.getActivity(), reviewInfo);
+        
+        request.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                result.put("taskComplete", true);
+                ReviewInfo reviewInfo = task.getResult();
+                Task<Void> flow = reviewManager.launchReviewFlow(cordova.getActivity(), reviewInfo);
 
-                    flow.addOnCompleteListener(task1 -> {
-                        result.put("flowComplete", true);
-                        callbackContext.success(result);
-                    });
-                } else {
-                    Log.i(TAG, "Task Unsuccessful");
-                    result.put("taskComplete", false);
-                    result.put("flowComplete", false);
-                    callbackContext.error(result);
-                }
-            });
-        } catch(JSONException e) {
-            callbackContext.error("JSONException: " + e.getLocalizedMessage());
-        }
+                flow.addOnCompleteListener(task1 -> {
+                    result.put("flowComplete", true);
+                    callbackContext.success(result);
+                });
+            } else {
+                Log.i(TAG, "Task Unsuccessful");
+                result.put("taskComplete", false);
+                result.put("flowComplete", false);
+                callbackContext.error(result);
+            }
+        });
     }
 }
